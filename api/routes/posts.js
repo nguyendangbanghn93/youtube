@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
+const auth = require("../middleware/auth");
 
 //create a post
 
-router.post("/", async (req, res) => {
+router.post("/",auth, async (req, res) => {
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();
