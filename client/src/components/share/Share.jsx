@@ -7,7 +7,7 @@ import {
   Cancel,
 } from "@material-ui/icons";
 import { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/auth/AuthContext";
 import axios from "axios";
 
 export default function Share() {

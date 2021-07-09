@@ -52,9 +52,10 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
+    role: {
+      type: Number,
+      enum:[1,2],
+      default: 2,
     },
     desc: {
       type: String,
@@ -93,10 +94,7 @@ UserSchema.methods.generateAuthToken = async function() {
 }
 UserSchema.statics.findByCredentials = async (email, password) => {
   // Search for a user by email and password.
-  console.log("__________2",email);
   const user = await User.findOne({ email} )
-  console.log("__________3",user);
-
   if (!user) {
       throw new Error({ error: 'Invalid login credentials' })
   }

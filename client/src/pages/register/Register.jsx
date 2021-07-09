@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useRef } from "react";
 import "./register.css";
 import { useHistory } from "react-router";
 import useInput from "../../hooks/useInput";
