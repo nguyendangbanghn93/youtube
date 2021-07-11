@@ -12,7 +12,6 @@ import { useContext } from "react";
 import { AuthContext } from "./context/auth/AuthContext";
 
 function App() {
-  console.log( useContext(AuthContext));
   const { authState:{user} } = useContext(AuthContext);
   return (
     <Router>

@@ -2,3 +2,9 @@
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
+.df{
+    display: flex;
+}
+.aic{
+    align-items:center;
+}

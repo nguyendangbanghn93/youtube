@@ -7,7 +7,8 @@ import { AuthContext } from "../../context/auth/AuthContext";
 
 export default function Feed({ username }) {
   const [posts, setPosts] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { authState:{user} } = useContext(AuthContext);
+console.log('user',user);
 
   useEffect(() => {
     const fetchPosts = async () => {

@@ -1,16 +1,19 @@
-import axios from "axios";
-import "./register.css";
-import { useHistory } from "react-router";
-import useInput from "../../hooks/useInput";
-export default function Register() {
+// import axios from "axios";
+import { AuthContext } from "../../context/auth/AuthContext";
 
-  const history = useHistory();
+import "./register.css";
+// import { useHistory } from "react-router";
+import useInput from "../../hooks/useInput";
+import { useContext } from "react";
+export default function Register() {
+  const { authActions} = useContext(AuthContext);
+  // const history = useHistory();
   const usernameInput = useInput((value) => value.length > 3, { label: "Username", name: "username" });
   const emailInput = useInput((value) => value.includes("@"), { label: "Email", name: "email" });
   const passwordInput = useInput((value) => value.trim().length > 5, { label: "Password", name: "password", type: "password" });
   const passwordAgainInput = useInput((value) => passwordInput.value === value, { label: "Password again", name: "passwordAgain", type: "password" });
   const input = { usernameInput, emailInput, passwordInput, passwordAgainInput };
-
+  
   const handleClick = async (e) => {
     e.preventDefault();
     if (!(usernameInput.isValid && emailInput.isValid && passwordInput.isValid && passwordAgainInput.isValid)) {
@@ -22,8 +25,9 @@ export default function Register() {
         password: passwordInput.value,
       };
       try {
-        await axios.post("/auth/register", user);
-        history.push("/login");
+        authActions.registerUser(user);
+        // await axios.post("/auth/register", user);
+        // history.push("/login");
       } catch (err) {
         console.log(err);
       }

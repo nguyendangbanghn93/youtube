@@ -11,7 +11,7 @@ import { AuthContext } from "../../context/auth/AuthContext";
 import axios from "axios";
 
 export default function Share() {
-  const { user } = useContext(AuthContext);
+  const { authState:{user} } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);

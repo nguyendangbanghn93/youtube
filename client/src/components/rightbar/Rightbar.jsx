@@ -10,7 +10,10 @@ import { Add, Remove } from "@material-ui/icons";
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
-  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const { authState: { user: currentUser }, dispatch } = useContext(AuthContext);
+    currentUser.followings.includes(user?.id)
+    console.log('currentUser', currentUser);
+  
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?.id)
   );
@@ -90,8 +93,8 @@ export default function Rightbar({ user }) {
               {user.relationship === 1
                 ? "Single"
                 : user.relationship === 1
-                ? "Married"
-                : "-"}
+                  ? "Married"
+                  : "-"}
             </span>
           </div>
         </div>

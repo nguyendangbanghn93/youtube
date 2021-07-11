@@ -3,6 +3,20 @@ const { models } = require('mongoose')
 const User = require('../models/User')
 const auth = require('../middleware/auth')
 
+//CHECK_LOGIN
+//AUTH
+router.get('/', auth, async (req, res) => {
+  const {user} = req
+  try {
+    if (!user)
+      return res.status(400).json({ success: false, message: 'User not found' })
+    res.json({ success: true, user })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: 'Internal server error' })
+  }
+})
+
 //REGISTER
 
 router.post('/register', async (req, res) => {
@@ -23,12 +37,13 @@ router.post('/login', async (req, res) => {
   //Login a registered user
   try {
     const { email, password } = req.body
-    const user = await User.findByCredentials(email, password)
+    
+    const user = await User.findByCredentials(email, password)    
     if (!user) {
       return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
     }
     const token = await user.generateAuthToken()
-    res.send({ user, token })
+    res.status(200).json({ success: true, user, token })//send({ user, token })
   } catch (error) {
     res.status(400).send(error)
   }

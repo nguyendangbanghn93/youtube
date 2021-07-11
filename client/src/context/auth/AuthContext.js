@@ -6,6 +6,8 @@ import { SET_AUTH, API_URL, LOCAL_STORAGE_TOKEN_NAME } from "./constants";
 
 export const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
+    // console.log('{ SET_AUTH, API_URL, LOCAL_STORAGE_TOKEN_NAME }',{ SET_AUTH, API_URL, LOCAL_STORAGE_TOKEN_NAME });
+
     const [authState, dispatch] = useReducer(authReducer, {
         authLoading: true,
         isAuthenticated: false,
@@ -16,8 +18,10 @@ const AuthContextProvider = ({ children }) => {
             if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
                 setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
             }
+
             try {
                 const response = await axios.get(`${API_URL}/auth`);
+                console.log('response', response);
                 if (response.data.success) {
                     dispatch({
                         type: SET_AUTH,
@@ -25,38 +29,43 @@ const AuthContextProvider = ({ children }) => {
                     });
                 }
             } catch (error) {
-                localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
-                setAuthToken(null);
-                dispatch({
-                    type: SET_AUTH,
-                    payload: { isAuthenticated: false, user: null },
-                });
+                console.log('error', error);
+                
+                // localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+                // setAuthToken(null);
+                // dispatch({
+                //     type: SET_AUTH,
+                //     payload: { isAuthenticated: false, user: null },
+                // });
             }
         },
         loginUser: async ({ email, password }) => {
-            console.log({ email, password });
             try {
                 const response = await axios.post(`${API_URL}/auth/login`, {
                     email,
                     password,
                 });
+                console.log("response12345", response.data.token);
+
                 if (response.data.success)
                     localStorage.setItem(
                         LOCAL_STORAGE_TOKEN_NAME,
-                        response.data.accessToken
+                        response.data.token
                     );
 
                 await authActions.loadUser();
 
                 return response.data;
             } catch (error) {
+                console.log("error", error);
                 if (error.response.data) return error.response.data;
                 else return { success: false, message: error.message };
             }
         },
-        registerUser: async ({ email, password }) => {
+        registerUser: async ({ username, email, password }) => {
             try {
                 const response = await axios.post(`${API_URL}/auth/register`, {
+                    username,
                     email,
                     password,
                 });
@@ -84,8 +93,9 @@ const AuthContextProvider = ({ children }) => {
         logoutUserOnAllDevice: () => { },
     };
     useEffect(() => {
-       authActions.loadUser()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        authActions.loadUser();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const authContextData = { authActions, authState };
 

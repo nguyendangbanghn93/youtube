@@ -1,3 +1,5 @@
+import ChooseButtonAccount from "../layout/ChooseButtonAccount";
+
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -5,7 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/auth/AuthContext";
 
 export default function Topbar() {
-  const { user } = useContext(AuthContext);
+  const { authState: { user } } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
@@ -42,17 +44,20 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <Link to={`/profile/${user.username}`}>
-          <img
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
-            }
-            alt=""
-            className="topbarImg"
-          />
-        </Link>
+        <div className="df aic">
+          <Link to={`/profile/${user?.username}`} className="df aic">
+            <img
+              src={
+                user?.profilePicture
+                  ? PF + user.profilePicture
+                  : PF + "person/noAvatar.png"
+              }
+              alt=""
+              className="topbarImg"
+            />
+          </Link>
+          {/* <ChooseButtonAccount /> */}
+        </div>
       </div>
     </div>
   );
