@@ -1,16 +1,17 @@
 import ChooseButtonAccount from "../layout/ChooseButtonAccount";
+import { Tooltip } from '@material-ui/core';
 
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../context/auth/AuthContext";
+import { authContext } from "../../context/auth/AuthContext";
 
 export default function Topbar() {
-  const { authState: { user } } = useContext(AuthContext);
+  const { authState: { user } } = authContext();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
+
       <div className="topbarLeft">
         <Link to="/" style={{ textDecoration: "none" }}>
           <span className="logo">Phây búc</span>
@@ -40,24 +41,30 @@ export default function Topbar() {
             <span className="topbarIconBadge">2</span>
           </div>
           <div className="topbarIconItem">
+
             <Notifications />
             <span className="topbarIconBadge">1</span>
+
           </div>
         </div>
-        <div className="df aic">
-          <Link to={`/profile/${user?.username}`} className="df aic">
-            <img
-              src={
-                user?.profilePicture
-                  ? PF + user.profilePicture
-                  : PF + "person/noAvatar.png"
-              }
-              alt=""
-              className="topbarImg"
-            />
-          </Link>
-          {/* <ChooseButtonAccount /> */}
-        </div>
+          <div className="df aic">
+        <Tooltip title={user?.username}>
+
+            <Link to={`/profile/${user?.username}`} className="df aic">
+              <img
+                src={
+                  user?.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "person/noAvatar.png"
+                }
+                alt=""
+                className="topbarImg"
+              />
+            </Link>
+        </Tooltip>
+
+            <ChooseButtonAccount />
+          </div>
       </div>
     </div>
   );

@@ -6,12 +6,12 @@ import {
   EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
-import { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../context/auth/AuthContext";
+import {  useRef, useState } from "react";
+import { authContext } from "../../context/auth/AuthContext";
 import axios from "axios";
 
 export default function Share() {
-  const { authState:{user} } = useContext(AuthContext);
+  const { authState:{user} } =  authContext();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);

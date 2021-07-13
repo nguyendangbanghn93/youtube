@@ -6,7 +6,7 @@ const auth = require('../middleware/auth')
 //CHECK_LOGIN
 //AUTH
 router.get('/', auth, async (req, res) => {
-  const {user} = req
+  const { user } = req
   try {
     if (!user)
       return res.status(400).json({ success: false, message: 'User not found' })
@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
     const user = new User(req.body)
     await user.save()
     const token = await user.generateAuthToken()
-    res.status(201).send({ user, token })
+    res.status(201).json({ success: true, message: 'Register success', user, token })
   } catch (error) {
     res.status(400).send(error)
   }
@@ -37,8 +37,8 @@ router.post('/login', async (req, res) => {
   //Login a registered user
   try {
     const { email, password } = req.body
-    
-    const user = await User.findByCredentials(email, password)    
+
+    const user = await User.findByCredentials(email, password)
     if (!user) {
       return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
     }

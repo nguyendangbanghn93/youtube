@@ -1,13 +1,13 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useContext } from "react";
 import { authReducer } from "./authReducer";
 import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
 import { SET_AUTH, API_URL, LOCAL_STORAGE_TOKEN_NAME } from "./constants";
 
 export const AuthContext = createContext();
+// eslint-disable-next-line react-hooks/rules-of-hooks
+export const authContext = () => useContext(AuthContext);
 const AuthContextProvider = ({ children }) => {
-    // console.log('{ SET_AUTH, API_URL, LOCAL_STORAGE_TOKEN_NAME }',{ SET_AUTH, API_URL, LOCAL_STORAGE_TOKEN_NAME });
-
     const [authState, dispatch] = useReducer(authReducer, {
         authLoading: true,
         isAuthenticated: false,
@@ -30,13 +30,12 @@ const AuthContextProvider = ({ children }) => {
                 }
             } catch (error) {
                 console.log('error', error);
-                
-                // localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
-                // setAuthToken(null);
-                // dispatch({
-                //     type: SET_AUTH,
-                //     payload: { isAuthenticated: false, user: null },
-                // });
+                localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+                setAuthToken(null);
+                dispatch({
+                    type: SET_AUTH,
+                    payload: { isAuthenticated: false, user: null },
+                });
             }
         },
         loginUser: async ({ email, password }) => {
@@ -57,7 +56,7 @@ const AuthContextProvider = ({ children }) => {
 
                 return response.data;
             } catch (error) {
-                console.log("error", error);
+                console.log("error", error.message);
                 if (error.response.data) return error.response.data;
                 else return { success: false, message: error.message };
             }
@@ -69,14 +68,13 @@ const AuthContextProvider = ({ children }) => {
                     email,
                     password,
                 });
-                if (response.data.success)
+                if (response.data.success) {
                     localStorage.setItem(
                         LOCAL_STORAGE_TOKEN_NAME,
-                        response.data.accessToken
+                        response.data.token
                     );
-
+                }
                 await authActions.loadUser();
-
                 return response.data;
             } catch (error) {
                 if (error.response.data) return error.response.data;
@@ -94,7 +92,6 @@ const AuthContextProvider = ({ children }) => {
     };
     useEffect(() => {
         authActions.loadUser();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const authContextData = { authActions, authState };

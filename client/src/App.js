@@ -8,16 +8,15 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "./context/auth/AuthContext";
+import { authContext } from "./context/auth/AuthContext";
 
 function App() {
-  const { authState:{user} } = useContext(AuthContext);
+  const { authState:{user} } = authContext();
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          {user ? <Home /> : <Register />}
+          {user ? <Home /> : <Login />}
         </Route>
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
         <Route path="/register">

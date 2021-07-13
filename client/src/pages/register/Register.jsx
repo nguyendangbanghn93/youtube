@@ -1,13 +1,11 @@
 // import axios from "axios";
-import { AuthContext } from "../../context/auth/AuthContext";
-
+import { authContext } from "../../context/auth/AuthContext";
 import "./register.css";
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 import useInput from "../../hooks/useInput";
-import { useContext } from "react";
 export default function Register() {
-  const { authActions} = useContext(AuthContext);
-  // const history = useHistory();
+  const { authActions} = authContext();
+  const history = useHistory();
   const usernameInput = useInput((value) => value.length > 3, { label: "Username", name: "username" });
   const emailInput = useInput((value) => value.includes("@"), { label: "Email", name: "email" });
   const passwordInput = useInput((value) => value.trim().length > 5, { label: "Password", name: "password", type: "password" });
@@ -26,8 +24,6 @@ export default function Register() {
       };
       try {
         authActions.registerUser(user);
-        // await axios.post("/auth/register", user);
-        // history.push("/login");
       } catch (err) {
         console.log(err);
       }
@@ -58,7 +54,10 @@ export default function Register() {
             <button className="loginButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton">Log into Account</button>
+            <button className="loginRegisterButton" onClick={e=>{
+              e.preventDefault();
+              history.push("/login");
+            }}>Log into Account</button>
           </form>
         </div>
       </div>
