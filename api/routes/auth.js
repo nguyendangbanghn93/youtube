@@ -6,11 +6,11 @@ const auth = require('../middleware/auth')
 //CHECK_LOGIN
 //AUTH
 router.get('/', auth, async (req, res) => {
-  const { user } = req
+  const { user,token } = req
   try {
     if (!user)
       return res.status(400).json({ success: false, message: 'User not found' })
-    res.json({ success: true, user })
+    res.status(200).json({ success: true, user, token })
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false, message: 'Internal server error' })
@@ -67,9 +67,9 @@ router.post('/logout', auth, async (req, res) => {
       return token.token != req.token
     })
     await req.user.save()
-    res.send()
+    res.status(200).json({ success: true, message: "Logout success!!" })
   } catch (error) {
-    res.status(500).send(error)
+    res.status(500).json({ success: false, message: "logout fail!!" })
   }
 })
 

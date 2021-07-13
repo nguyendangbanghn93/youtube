@@ -68,3 +68,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+REACT_APP_PUBLIC_FOLDER=http://localhost:3000/assets/
+REACT_APP_API_URL =http://localhost:8800/api
+REACT_APP_LOCAL_STORAGE_TOKEN_NAME =LOCAL_STORAGE_TOKEN_NAME
+REACT_APP_LOCAL_STORAGE_USER =LOCAL_STORAGE_USER
+REACT_APP_CLOUDINARY_UNSIGNED_UPLOAD_PRESET=CLOUDINARY_URL=cloudinary://152917567513974:lgXRFvazgOGoOtvWHQGjRzQzdHY@nguyendangbang
+REACT_APP_CLOUDINARY_CLOUDNAME=nguyendangbang
+REACT_APP_CLOUDINARY_API_SECRET=lgXRFvazgOGoOtvWHQGjRzQzdHY

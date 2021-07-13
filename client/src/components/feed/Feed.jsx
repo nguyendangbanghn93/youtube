@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Post from "../post/Post";
 import Share from "../share/Share";
 import "./feed.css";
@@ -7,8 +7,7 @@ import { authContext } from "../../context/auth/AuthContext";
 
 export default function Feed({ username }) {
   const [posts, setPosts] = useState([]);
-  const { authState:{user} } =  authContext();
-console.log('user',user);
+  const { authState: { user } } = authContext();
 
   useEffect(() => {
     const fetchPosts = async () => {

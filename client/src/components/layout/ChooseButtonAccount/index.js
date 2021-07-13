@@ -1,10 +1,10 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {Menu,MenuItem,ListItemIcon,ListItemText,IconButton} from '@material-ui/core';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DevicesOtherIcon from '@material-ui/icons/DevicesOther';
-
+import { authContext } from '../../../context/auth/AuthContext';
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
@@ -38,7 +38,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const { authActions: { logoutUser, logoutUserAllDevice } } = authContext();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,7 +49,7 @@ export default function CustomizedMenus() {
 
   return (
     <div>
-        <IconButton
+      <IconButton
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
@@ -64,14 +64,20 @@ export default function CustomizedMenus() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-      {[]}
-        <StyledMenuItem>
+        {[]}
+        <StyledMenuItem onClick={ ()=>{
+          setAnchorEl(null);
+          logoutUser();
+        }}>
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Logout" />
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={ ()=>{
+          setAnchorEl(null);
+          logoutUserAllDevice();
+        }}>
           <ListItemIcon>
             <DevicesOtherIcon fontSize="small" />
           </ListItemIcon>

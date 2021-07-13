@@ -2,28 +2,34 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
+import Spinner from "./components/layout/Spinner";
+import { authContext } from "./context/auth/AuthContext";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
-import { authContext } from "./context/auth/AuthContext";
 
 function App() {
-  const { authState:{user} } = authContext();
+
+  const { authState: { authLoading, isAuthenticated } } = authContext();
+  Spinner(authLoading)
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          {user ? <Home /> : <Login />}
+          {isAuthenticated ? <Home /> : <Login />}
         </Route>
-        <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+        <Route path="/login">
+          {isAuthenticated ? <Redirect to="/" /> : <Login />}
+        </Route>
         <Route path="/register">
-          {user ? <Redirect to="/" /> : <Register />}
+          {isAuthenticated ? <Redirect to="/" /> : <Register />}
         </Route>
         <Route path="/profile/:username">
-          <Profile />
+          {!isAuthenticated ? <Redirect to="/" /> : <Profile />}
         </Route>
       </Switch>
     </Router>

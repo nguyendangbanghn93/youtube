@@ -1,6 +1,5 @@
 import ChooseButtonAccount from "../layout/ChooseButtonAccount";
-import { Tooltip } from '@material-ui/core';
-
+import Tooltip from "../layout/Tooltip";
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -47,8 +46,11 @@ export default function Topbar() {
 
           </div>
         </div>
-          <div className="df aic">
-        <Tooltip title={user?.username}>
+        <div className="df aic">
+          <Tooltip title={<div>
+            <div>{user?.username}</div>
+            <div>Test</div>
+          </div>} >
 
             <Link to={`/profile/${user?.username}`} className="df aic">
               <img
@@ -61,10 +63,9 @@ export default function Topbar() {
                 className="topbarImg"
               />
             </Link>
-        </Tooltip>
-
-            <ChooseButtonAccount />
-          </div>
+          </Tooltip>
+          <ChooseButtonAccount />
+        </div>
       </div>
     </div>
   );
