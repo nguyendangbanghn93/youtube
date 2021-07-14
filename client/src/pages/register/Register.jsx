@@ -23,7 +23,7 @@ export default function Register() {
         password: passwordInput.value,
       };
       try {
-        authActions.registerUser(user);
+        authActions.registerAccount(user);
       } catch (err) {
         console.log(err);
       }

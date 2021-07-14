@@ -9,14 +9,14 @@ import { useHistory } from "react-router";
 export default function Login() {
   const history = useHistory();
   const [isFetching, setIsFetching] = useState(false);
-  const {authActions:{loginUser}} =  authContext();
+  const {authActions:{loginAccount}} =  authContext();
   const emailInput = useInput((value) => value.includes("@"), { label: "Email", name: "email" });
   const passwordInput = useInput((value) => value.trim().length > 5, { label: "Password", name: "password", type: "password" });
   const input = { emailInput, passwordInput };
   const handleClick = (e) => {
     e.preventDefault();
     setIsFetching(true);
-    loginUser({ email: emailInput.value, password: passwordInput.value });
+    loginAccount({ email: emailInput.value, password: passwordInput.value });
     setIsFetching(false);
   };
 

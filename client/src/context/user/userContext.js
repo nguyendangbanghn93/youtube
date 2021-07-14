@@ -17,6 +17,7 @@ const AuthContextProvider = ({ children }) => {
         user: user,
     });
     const authActions = useMemo(() => ({
+        //auth
         loadAccount: async () => {
             try {
                 const response = await axios.get(`${API_URL}/auth`);
@@ -36,6 +37,7 @@ const AuthContextProvider = ({ children }) => {
                 });
             }
         },
+        //auth/login
         loginAccount: async ({ email, password }) => {
             try {
                 const response = await axios.post(`${API_URL}/auth/login`, {
@@ -57,6 +59,7 @@ const AuthContextProvider = ({ children }) => {
             }
 
         },
+        //auth/register
         registerAccount: async ({ username, email, password }) => {
             try {
                 const response = await axios.post(`${API_URL}/auth/register`, {
@@ -78,6 +81,7 @@ const AuthContextProvider = ({ children }) => {
                 }
             }
         },
+        //auth/logout
         logoutAccount: async () => {
             const response = await axios.post(`${API_URL}/auth/logout`);
             setAuth(null);
@@ -86,6 +90,7 @@ const AuthContextProvider = ({ children }) => {
                 payload: { isAuthenticated: false, user: null },
             });
         },
+        //auth/logout-all
         logoutAccountAllDevice: async () => {
             const response = await axios.post(`${API_URL}/auth/logout-all`);
             setAuth(null);
@@ -95,6 +100,7 @@ const AuthContextProvider = ({ children }) => {
                 payload: { isAuthenticated: false, user: null },
             });
         },
+        // getInformation
     }), []);
     useEffect(() => {
         const loadAccount = async () => {

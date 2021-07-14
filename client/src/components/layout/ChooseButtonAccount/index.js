@@ -38,7 +38,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { authActions: { logoutUser, logoutUserAllDevice } } = authContext();
+  const { authActions: { logoutAccount, logoutAccountAllDevice } } = authContext();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -67,7 +67,7 @@ export default function CustomizedMenus() {
         {[]}
         <StyledMenuItem onClick={ ()=>{
           setAnchorEl(null);
-          logoutUser();
+          logoutAccount();
         }}>
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />
@@ -76,7 +76,7 @@ export default function CustomizedMenus() {
         </StyledMenuItem>
         <StyledMenuItem onClick={ ()=>{
           setAnchorEl(null);
-          logoutUserAllDevice();
+          logoutAccountAllDevice();
         }}>
           <ListItemIcon>
             <DevicesOtherIcon fontSize="small" />

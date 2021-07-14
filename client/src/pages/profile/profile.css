@@ -48,3 +48,6 @@
 .profileRightBottom{
     display: flex;
 }
+.bgCam{
+    background: #0000006b;
+}
